@@ -11,7 +11,7 @@ def parsing_csv(i,folder):
             file_name = folder + "//AnnualTicketSales.csv"
         if i == 8:
             file_name = folder + "//WideReleasesCount.csv"
-
+    #The above two files were having a comma at the end, to remove that last part we use row.pop()
         query(eval(f'sql.test_create_{i}'))
         with open(file_name, newline='', encoding='utf-8-sig') as f:
             j = 0
@@ -35,7 +35,7 @@ def parsing_csv(i,folder):
             j = 0
             for row in reader:
                 if j > 0:
-                    if j < row_count - 1:
+                    if j < row_count - 1: # The last row in data had series of commmas, this logic is to wrangle that.
                         query(eval(f'sql.test_insert_{i}'), row)
             j += 1
     else:
